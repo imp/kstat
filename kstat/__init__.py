@@ -12,4 +12,9 @@
 # Use is sujbect to license terms.
 #
 
-__all__ = ['kstat']
+__version__ = '1'
+__author__ = 'Cyril Plisko <cyril.plisko@grigale.com>'
+
+from .kstat import Kstat
+
+__all__ = ['Kstat']
