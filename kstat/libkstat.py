@@ -116,6 +116,13 @@ class kstat_ctl(C.Structure):
 #        } value;                        /* value of counter */
 #} kstat_named_t;
 
+KSTAT_DATA_CHAR = 0
+KSTAT_DATA_INT32 = 1
+KSTAT_DATA_UINT32 = 2
+KSTAT_DATA_INT64 = 3
+KSTAT_DATA_UINT64 = 4
+KSTAT_DATA_STRING = 9
+
 class addr_union(C.Union):
     _fields_ = [
         ('ptr', C.c_char_p),
