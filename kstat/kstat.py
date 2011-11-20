@@ -50,10 +50,19 @@ class Kstat():
             print ks.ks_data
             datap = C.cast(ks.ks_data, C.POINTER(libkstat.kstat_named))
             for i in range(ks.ks_ndata):
-                print datap
-                print datap.contents
-                #print datap[i].contents
-                value[datap[i].name] = 0
+                if datap[i].data_type == libkstat.KSTAT_DATA_CHAR:
+                    value[datap[i].name] = datap[i].value.c
+                elif datap[i].data_type == libkstat.KSTAT_DATA_INT32:
+                    value[datap[i].name] = datap[i].value.i32
+                elif datap[i].data_type == libkstat.KSTAT_DATA_UINT32:
+                    value[datap[i].name] = datap[i].value.ui32
+                elif datap[i].data_type == libkstat.KSTAT_DATA_INT64:
+                    value[datap[i].name] = datap[i].value.i64
+                elif datap[i].data_type == libkstat.KSTAT_DATA_UINT64:
+                    value[datap[i].name] = datap[i].value.ui64
+                #print datap.contents
+                #print dir(datap[i].value)
+                #value[datap[i].name] = 0
         elif ks.ks_type == libkstat.KSTAT_TYPE_INTR:
             pass
         elif ks.ks_type == libkstat.KSTAT_TYPE_IO:
@@ -89,7 +98,9 @@ def main():
     k = Kstat()
     pp.pprint(k)
     #k.dump()
-    pp.pprint(k[('unix', 0, 'kstat_types')])
+    pp.pprint(k['unix', 0, 'kstat_types'])
+    #pp.pprint(k['unix', 0, 'zio_data_buf2560'])
+    pp.pprint(k['audiohd', 0, 'engine_0'])
     #k.lookup()
 
 
