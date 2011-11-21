@@ -39,7 +39,7 @@ class Kstat():
     def __getitem__(self, triplet):
         module, instance, name = triplet
         ksp = libkstat.kstat_lookup(self._ctl, module, instance, name)
-	if not ksp:
+        if not ksp:
             raise KeyError(triplet)
         libkstat.kstat_read(self._ctl, ksp, None)
         ks = ksp.contents
